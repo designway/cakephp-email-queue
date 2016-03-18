@@ -119,7 +119,9 @@ class EmailQueueTable extends Table
      */
     public function releaseLocks($ids)
     {
-        $this->updateAll(['locked' => false], ['id IN' => $ids]);
+        if(!empty($ids)) {
+            $this->updateAll(['locked' => false], ['id IN' => $ids]);
+        }
     }
 
     /**
@@ -127,7 +129,7 @@ class EmailQueueTable extends Table
      */
     public function clearLocks()
     {
-        $this->updateAll(['locked' => false], '1=1');
+        $this->updateAll(['locked' => false], ['locked' => true]);
     }
 
     /**
